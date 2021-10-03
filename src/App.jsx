@@ -1,12 +1,12 @@
 import "./App.css";
+import Sidebar from "./Sidebar";
 
 function App() {
     return (
         // BEM naming convention
-        <div className="App">
-            <h1>Let's build whatsapp Clone</h1>
+        <div className="app">
             <div className="app__body">
-                {/* sidebar */}
+                <Sidebar />
                 {/* chats */}
             </div>
         </div>
