@@ -1,4 +1,7 @@
+// stylesheet
 import "./App.css";
+
+// components
 import Sidebar from "./Sidebar";
 
 function App() {

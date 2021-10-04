@@ -1,13 +1,61 @@
+// default imports
 import React from "react";
-import "./Sidebar.css";
+
+// libraries
+import { Avatar, IconButton } from "@material-ui/core";
+import { Chat, DonutLarge, MoreVert, SearchOutlined } from "@material-ui/icons";
+
+// components
+import SidebarChat from "./SidebarChat";
+import {
+    SideBarChats,
+    SideBarContainer,
+    SideBarHeader,
+    SideBarHeaderRight,
+    SideBarSearch,
+    SideBarSearchContainer,
+} from "./SidebarStyled";
 
 function Sidebar() {
     return (
-        <div className="sidebar">
-            <div className="sidebar__header"></div>
-            <div className="sidebar__search"></div>
-            <div className="sidebar__chats"></div>
-        </div>
+        <SideBarContainer>
+            <SideBarHeader>
+                <Avatar />
+                <SideBarHeaderRight>
+                    <IconButton>
+                        <DonutLarge />
+                    </IconButton>
+                    <IconButton>
+                        <Chat />
+                    </IconButton>
+                    <IconButton>
+                        <MoreVert />
+                    </IconButton>
+                </SideBarHeaderRight>
+            </SideBarHeader>
+            <SideBarSearch>
+                <SideBarSearchContainer>
+                    <SearchOutlined />
+                    <input
+                        type="text"
+                        placeholder="Search or start a new chat"
+                    />
+                </SideBarSearchContainer>
+            </SideBarSearch>
+            <SideBarChats>
+                <SidebarChat addNewChat="true" />
+                <SidebarChat />
+                <SidebarChat />
+                <SidebarChat />
+                <SidebarChat />
+                <SidebarChat />
+                <SidebarChat />
+                <SidebarChat />
+                <SidebarChat />
+                <SidebarChat />
+                <SidebarChat />
+            </SideBarChats>
+        </SideBarContainer>
     );
 }
 
