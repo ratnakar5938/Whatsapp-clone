@@ -1,5 +1,6 @@
 // stylesheet
 import "./App.css";
+import Chat from "./Chat";
 
 // components
 import Sidebar from "./Sidebar";
@@ -10,7 +11,7 @@ function App() {
         <div className="app">
             <div className="app__body">
                 <Sidebar />
-                {/* chats */}
+                <Chat />
             </div>
         </div>
     );
