@@ -1,5 +1,5 @@
 // default imports
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // libraries
 import { Avatar, IconButton } from "@material-ui/core";
@@ -7,6 +7,7 @@ import { Chat, DonutLarge, MoreVert, SearchOutlined } from "@material-ui/icons";
 
 // components
 import SidebarChat from "./SidebarChat";
+import db from "./firebase";
 import {
     SideBarChats,
     SideBarContainer,
@@ -15,12 +16,30 @@ import {
     SideBarSearch,
     SideBarSearchContainer,
 } from "./SidebarStyled";
+import { useStateValue } from "./StateProvider";
 
 function Sidebar() {
+    const [rooms, setRooms] = useState([]);
+    const [{ user }, dispatch] = useStateValue();
+
+    useEffect(() => {
+        const unsubscribe = db.collection("rooms").onSnapshot((snapshot) =>
+            setRooms(
+                snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    data: doc.data(),
+                }))
+            )
+        );
+
+        return () => {
+            unsubscribe();
+        };
+    }, []);
     return (
         <SideBarContainer>
             <SideBarHeader>
-                <Avatar />
+                <Avatar src={user?.photoURL} />
                 <SideBarHeaderRight>
                     <IconButton>
                         <DonutLarge />
@@ -43,17 +62,14 @@ function Sidebar() {
                 </SideBarSearchContainer>
             </SideBarSearch>
             <SideBarChats>
-                <SidebarChat addNewChat="true" />
-                <SidebarChat />
-                <SidebarChat />
-                <SidebarChat />
-                <SidebarChat />
-                <SidebarChat />
-                <SidebarChat />
-                <SidebarChat />
-                <SidebarChat />
-                <SidebarChat />
-                <SidebarChat />
+                <SidebarChat addNewChat />
+                {rooms.map((room) => (
+                    <SidebarChat
+                        key={room.id}
+                        id={room.id}
+                        name={room.data.name}
+                    />
+                ))}
             </SideBarChats>
         </SideBarContainer>
     );

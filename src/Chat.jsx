@@ -6,6 +6,11 @@ import { Avatar, IconButton } from "@material-ui/core";
 import styled from "styled-components";
 import { AttachFile, Mic, MoreVert, SearchOutlined } from "@material-ui/icons";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
+import { useParams } from "react-router";
+import db from "./firebase";
+import { useStateValue } from "./StateProvider";
+import firebase from "firebase/app";
+import SendIcon from "@material-ui/icons/Send";
 
 const ChatContainer = styled.div`
     flex: 0.65;
@@ -112,14 +117,39 @@ const ChatFooter = styled.div`
 function Chat() {
     const [seed, setSeed] = useState("");
     const [input, setInput] = useState("");
+    const { roomId } = useParams();
+    const [roomName, setRoomName] = useState("");
+    const [messages, setMessages] = useState([]);
+    const [{ user }, dispatch] = useStateValue();
 
     useEffect(() => {
-        setSeed(Math.floor(Math.random() * 5000));
-    }, []);
+        if (roomId) {
+            db.collection("rooms")
+                .doc(roomId)
+                .onSnapshot((snapshot) => {
+                    setRoomName(snapshot.data().name);
+                });
+
+            db.collection("rooms")
+                .doc(roomId)
+                .collection("messages")
+                .orderBy("timestamp", "asc")
+                .onSnapshot((snapshot) => {
+                    setMessages(snapshot.docs.map((doc) => doc.data()));
+                });
+
+            setSeed(Math.floor(Math.random() * 5000));
+        }
+    }, [roomId]);
 
     const sendMessage = (e) => {
         e.preventDefault();
         console.log("You typed >>> ", input);
+        db.collection("rooms").doc(roomId).collection("messages").add({
+            message: input,
+            name: user.displayName,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
         setInput("");
     };
 
@@ -130,8 +160,13 @@ function Chat() {
                     src={`https://avatars.dicebear.com/api/human/${seed}.svg`}
                 />
                 <ChatHeaderInfo>
-                    <h3>Room Name</h3>
-                    <p>Last seen at...</p>
+                    <h3>{roomName}</h3>
+                    <p>
+                        Last seen{" "}
+                        {new Date(
+                            messages[messages.length - 1]?.timestamp?.toDate()
+                        ).toUTCString()}
+                    </p>
                 </ChatHeaderInfo>
                 <ChatHeaderRight>
                     <IconButton>
@@ -146,16 +181,22 @@ function Chat() {
                 </ChatHeaderRight>
             </ChatHeader>
             <ChatBody>
-                <ChatMessage className={`${true && "chat__reciever"}`}>
-                    <ChatName>Ratnakar</ChatName>
-                    Hey Guys
-                    <ChatTimeStamp>3:52pm</ChatTimeStamp>
-                </ChatMessage>
-                <ChatMessage className={`${false && "chat__reciever"}`}>
-                    <ChatName>Ratnakar</ChatName>
-                    Hey Guys
-                    <ChatTimeStamp>3:52pm</ChatTimeStamp>
-                </ChatMessage>
+                {messages.map((message) => (
+                    <ChatMessage
+                        className={`${
+                            user.displayName === message.name &&
+                            "chat__reciever"
+                        }`}
+                    >
+                        <ChatName>{message.name}</ChatName>
+                        {message.message}
+                        <ChatTimeStamp>
+                            {new Date(
+                                message.timestamp?.toDate()
+                            ).toUTCString()}
+                        </ChatTimeStamp>
+                    </ChatMessage>
+                ))}
             </ChatBody>
             <ChatFooter>
                 <InsertEmoticonIcon />
@@ -171,6 +212,9 @@ function Chat() {
                     </button>
                 </form>
                 <Mic />
+                <IconButton onClick={sendMessage}>
+                    <SendIcon />
+                </IconButton>
             </ChatFooter>
         </ChatContainer>
     );
