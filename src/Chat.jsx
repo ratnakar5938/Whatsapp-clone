@@ -2,15 +2,17 @@
 import React, { useEffect, useState } from "react";
 
 // libraries
-import { Avatar, IconButton } from "@material-ui/core";
+import firebase from "firebase/app";
+import { useParams } from "react-router";
 import styled from "styled-components";
+import { Avatar, IconButton } from "@material-ui/core";
+import SendIcon from "@material-ui/icons/Send";
 import { AttachFile, Mic, MoreVert, SearchOutlined } from "@material-ui/icons";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
-import { useParams } from "react-router";
+
+// components
 import db from "./firebase";
 import { useStateValue } from "./StateProvider";
-import firebase from "firebase/app";
-import SendIcon from "@material-ui/icons/Send";
 
 const ChatContainer = styled.div`
     flex: 0.65;
