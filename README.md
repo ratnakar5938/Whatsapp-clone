@@ -1,7 +1,4 @@
 <div align="center" >
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 <img src="https://res.cloudinary.com/ratnakar5938/image/upload/v1635397981/Whatsapp%20clone/wp_pvgx7o.png"  width="70%">
 </div>
 
@@ -84,21 +81,6 @@ Please adhere to this project's `code of conduct`.
 </table>
 
 </tbody></table>
-<h2 align=center> ✨ Contributors </h2>
-
-Thanks go to these **Wonderful People** 👨🏻‍💻: 🚀
-
-<table>
-	<tr>
-		 <td>
-  <a href="https://github.com/ratnakar5938/Whatsapp-clone/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=ratnakar5938/Whatsapp-clone" />
-  </a>
-		</td>
-	</tr>
-</table>
-<br>
-<b>Contributions of any kind are welcome!</b>
 
 ## Contributors ✨
 
