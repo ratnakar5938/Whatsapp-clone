@@ -20,6 +20,7 @@ import { useStateValue } from "./StateProvider";
 
 function Sidebar() {
     const [rooms, setRooms] = useState([]);
+    // eslint-disable-next-line 
     const [{ user }, dispatch] = useStateValue();
 
     useEffect(() => {

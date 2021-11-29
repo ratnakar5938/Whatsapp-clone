@@ -4,14 +4,28 @@ import styled from "styled-components";
 export const SideBarContainer = styled.div`
     display: flex;
     flex-direction: column;
-    flex: 0.35;
+    flex: 0.3;
+    min-width: 300px;
+    border-right: 1px solid lightgray;
+
+    @media only screen and (max-width: 1604px) {
+        flex: 0.35;
+    }
+    @media only screen and (max-width: 1110px) {
+        flex: 0.4;
+    }
+    @media only screen and (max-width: 802px) {
+        min-width: 90vw;
+        border-right: none;
+    }
+
 `;
 
 export const SideBarHeader = styled.div`
     display: flex;
     justify-content: space-between;
-    padding: 20px;
-    border-right: 1px solid lightgray;
+    padding: 6px 20px;
+    align-items: center;
 `;
 
 export const SideBarHeaderRight = styled.div`

@@ -1,4 +1,5 @@
 // default import
+// eslint-disable-next-line 
 import React, { useState } from "react";
 
 // libraries
@@ -15,6 +16,7 @@ import Login from "./Login";
 import { useStateValue } from "./StateProvider";
 
 function App() {
+    // eslint-disable-next-line 
     const [{ user }, dispatch] = useStateValue();
     const history = createBrowserHistory();
     return (

@@ -15,13 +15,23 @@ import db from "./firebase";
 import { useStateValue } from "./StateProvider";
 
 const ChatContainer = styled.div`
-    flex: 0.65;
+    flex: 0.7;
     display: flex;
     flex-direction: column;
+    @media only screen and (max-width: 1604px) {
+        flex: 0.65;
+    }
+    @media only screen and (max-width: 1110px) {
+        flex: 0.6;
+    }
+    @media only screen and (max-width: 802px) {
+        display: none;
+        width: 90vw;
+    }
 `;
 
 const ChatHeader = styled.div`
-    padding: 20px;
+    padding: 6px 20px;
     display: flex;
     align-items: center;
     border-bottom: 1px solid lightgray;
@@ -122,6 +132,7 @@ function Chat() {
     const { roomId } = useParams();
     const [roomName, setRoomName] = useState("");
     const [messages, setMessages] = useState([]);
+    // eslint-disable-next-line 
     const [{ user }, dispatch] = useStateValue();
 
     useEffect(() => {
